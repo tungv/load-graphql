@@ -33,6 +33,39 @@ project/
       └── otherTypeOfFile.js
 ```
 
+```graphql
+# src/graphql/common.graphql
+# because Query and Mutation typedef are predefined, you can immediately extend them in your graphql files
+extend type Query {
+  someQuery: String!
+  someOtherQuery: Number!
+}
+
+extend type Mutation {
+  createSomething(title: String!): Boolean
+}
+
+scalar JSON
+```
+
+```js
+// src/graphql/some.resolver.js
+export const Query {
+  someQuery: () => 'test'
+  
+  // someOtherQuery can be omitted or implement in a different .resolver.js file
+}
+
+export const Mutation {
+  createSomething(root, { title }) {
+    // ... do something here
+    return true
+  }
+}
+
+export const JSON = require('graphql-json-type')
+```
+
 ```js
 // src/schema.js file
 import loadGraphql from 'load-graphql';
@@ -44,7 +77,14 @@ const pathToGraphqlRootDir = path.join(__dirname, './graphql');
 
 const executableSchema = loadGraphql(pathToGraphqlRootDir);
 
-// excutableSchema will combine all typedefs in .graphql files and merge all resolvers in .resolver.js files (these pattern can be configurable)
+/* 
+  excutableSchema will
+  1. combine all typedefs in .graphql files, and
+  2. merge all resolvers in .resolver.js files 
+  
+  these pattern can be configurable
+  
+*/
 ```
 
 ## Configuration
