@@ -6,8 +6,11 @@ import compact from 'lodash/fp/compact';
 import map from 'lodash/fp/map';
 
 export default (rootPath, options = {}) => {
-  const { resolversPattern = '**/*.resolver.js' } = options;
-  const typeDefsFiles = glob.sync('**/*.graphql', { cwd: rootPath });
+  const {
+    resolversPattern = '**/*.resolver.js',
+    typedefsPattern = '**/*.graphql',
+  } = options;
+  const typeDefsFiles = glob.sync(typedefsPattern, { cwd: rootPath });
   const resolversFiles = glob.sync(resolversPattern, { cwd: rootPath });
 
   const typeDefs = compact(
