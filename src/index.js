@@ -1,0 +1,35 @@
+import { makeExecutableSchema } from 'graphql-tools';
+import mergeAll from 'lodash/fp/mergeAll';
+import map from 'lodash/fp/map';
+import loader from './loader';
+import readPkgUp from 'read-pkg-up';
+
+const rootTypeDefs = `
+type Mutation {
+  # @see: https://github.com/graphql/graphql-js/issues/937
+  _: Boolean
+}
+
+type Query {
+  version: String
+}
+`;
+
+const rootResolvers = {
+  Query: {
+    version: () => {
+      const { pkg: packageJSON } = readPkgUp.sync();
+      return pkg.version;
+    },
+  },
+};
+
+export default function(rootPath) {
+  // magic
+  const { typeDefs, resolvers } = loader(rootPath);
+
+  return makeExecutableSchema({
+    typeDefs: [rootTypeDefs, ...typeDefs],
+    resolvers: mergeAll([rootResolvers, ...resolvers]),
+  });
+}
