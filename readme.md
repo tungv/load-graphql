@@ -58,3 +58,9 @@ properties:
 | typedefsPattern  | `**/*.graphql`     | glob for matching resolver files |
 
 you can pass anything that `glob` package accepts for these options.
+
+## Error handling
+
+`load-graphql` gracefully handles error thrown while trying to parse typedefs
+file or `require`'ing resolver files. In case of error, it will ignore the
+content of the flawed files and continue.
