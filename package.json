@@ -12,6 +12,7 @@
   "author": "Tung Vu <me@tungv.com>",
   "license": "ISC",
   "dependencies": {
+    "boxen": "^1.3.0",
     "glob": "^7.1.2",
     "lodash": "^4.17.4",
     "read-pkg-up": "^3.0.0"
