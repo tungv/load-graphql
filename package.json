@@ -1,13 +1,13 @@
 {
   "name": "load-graphql",
   "version": "1.0.4",
-  "description": "automagically load graphql definitions and resolvers and return an executable schema",
+  "description":
+    "automagically load graphql definitions and resolvers and return an executable schema",
   "main": "build/index.js",
-  "files": [
-    "build/*"
-  ],
+  "files": ["build/*"],
   "scripts": {
-    "prepare": "babel src -d build"
+    "prepare": "babel src -d build",
+    "test": "ava --serial"
   },
   "author": "Tung Vu <me@tungv.com>",
   "license": "ISC",
@@ -31,8 +31,7 @@
     "graphql-tools": "^2.12.0"
   },
   "ava": {
-    "require": [
-      "@babel/register"
-    ]
+    "require": ["@babel/register"],
+    "files": ["tests/**/*.spec.js"]
   }
 }
