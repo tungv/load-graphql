@@ -1,0 +1,3 @@
+extend type Query {
+  sum(a: Float, b: Float): Float
+}
