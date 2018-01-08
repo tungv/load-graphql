@@ -35,6 +35,23 @@ test('should load', async t => {
   t.true(logs.length === 0);
 });
 
+test('should have version as package.json version', async t => {
+  logs.length = 0;
+  const schema = load(path.resolve(__dirname, '../fixtures/test_root_1'));
+  const resp = await graphql(
+    schema,
+    `
+      {
+        version
+      }
+    `,
+    {}
+  );
+
+  t.deepEqual(resp, { data: { version: '1.1.1' } });
+  t.true(logs.length === 0);
+});
+
 test('should log error if resolvers are failed to load', t => {
   logs.length = 0;
   const schema = load(
