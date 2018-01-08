@@ -19,7 +19,7 @@ const rootResolvers = {
   Query: {
     version: () => {
       const { pkg: packageJSON } = readPkgUp.sync();
-      return pkg.version;
+      return packageJSON.version;
     },
   },
 };
