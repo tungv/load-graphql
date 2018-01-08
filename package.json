@@ -1,10 +1,11 @@
 {
   "name": "load-graphql",
-  "version": "1.1.0",
-  "description":
-    "automagically load graphql definitions and resolvers and return an executable schema",
+  "version": "1.1.1",
+  "description": "automagically load graphql definitions and resolvers and return an executable schema",
   "main": "build/index.js",
-  "files": ["build/*"],
+  "files": [
+    "build/*"
+  ],
   "scripts": {
     "prepare": "babel src -d build",
     "test": "ava --serial"
@@ -31,7 +32,11 @@
     "graphql-tools": "^2.16.0"
   },
   "ava": {
-    "require": ["@babel/register"],
-    "files": ["tests/**/*.spec.js"]
+    "require": [
+      "@babel/register"
+    ],
+    "files": [
+      "tests/**/*.spec.js"
+    ]
   }
 }
