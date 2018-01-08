@@ -19,6 +19,7 @@ export default (rootPath, options = {}) => {
       try {
         return String(fs.readFileSync(path.resolve(rootPath, file)));
       } catch (ex) {
+        /* istanbul ignore next */
         return null;
       }
     }, typeDefsFiles)
