@@ -1,9 +1,10 @@
+import boxen from 'boxen';
+import compact from 'lodash/fp/compact';
 import glob from 'glob';
+import map from 'lodash/fp/map';
+
 import fs from 'fs';
 import path from 'path';
-
-import compact from 'lodash/fp/compact';
-import map from 'lodash/fp/map';
 
 export default (rootPath, options = {}) => {
   const {
@@ -25,9 +26,16 @@ export default (rootPath, options = {}) => {
 
   const resolvers = compact(
     map(file => {
+      const absPath = path.resolve(rootPath, file);
       try {
-        return require(path.resolve(rootPath, file));
+        return require(absPath);
       } catch (ex) {
+        console.log(
+          '\n' +
+            boxen(`Error while loading "${absPath}"\n\n${ex.message}`, {
+              padding: 1,
+            })
+        );
         return null;
       }
     }, resolversFiles)
