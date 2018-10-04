@@ -17,7 +17,7 @@ export default (rootPath, options = {}) => {
   const typeDefs = compact(
     map(file => {
       try {
-        return String(fs.readFileSync(path.resolve(rootPath, file)));
+        return String(fs.readFileSync(path.join(rootPath, file)));
       } catch (ex) {
         /* istanbul ignore next */
         return null;
@@ -27,7 +27,7 @@ export default (rootPath, options = {}) => {
 
   const resolvers = compact(
     map(file => {
-      const absPath = path.resolve(rootPath, file);
+      const absPath = path.join(rootPath, file);
       try {
         return require(absPath);
       } catch (ex) {
