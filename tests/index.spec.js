@@ -48,7 +48,7 @@ test('should have version as package.json version', async t => {
     {}
   );
 
-  t.deepEqual(resp, { data: { version: '1.1.1' } });
+  t.deepEqual(resp, { data: { version: '1.1.2' } });
   t.true(logs.length === 0);
 });
 
