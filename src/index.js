@@ -1,8 +1,10 @@
 import { makeExecutableSchema } from 'graphql-tools';
 import mergeAll from 'lodash/fp/mergeAll';
+import join from 'lodash/fp/join';
 import map from 'lodash/fp/map';
 import loader from './loader';
 import readPkgUp from 'read-pkg-up';
+import { printSchema } from 'graphql';
 
 const rootTypeDefs = `
 type Mutation {
@@ -24,12 +26,18 @@ const rootResolvers = {
   },
 };
 
-export default function(rootPath) {
+export default function (rootPath) {
   // magic
   const { typeDefs, resolvers } = loader(rootPath);
 
-  return makeExecutableSchema({
-    typeDefs: [rootTypeDefs, ...typeDefs],
-    resolvers: mergeAll([rootResolvers, ...resolvers]),
-  });
+  const mergedResolvers = mergeAll([rootResolvers, ...resolvers]);
+
+  const temp = makeExecutableSchema({ typeDefs: [rootTypeDefs, ...typeDefs] });
+
+  const mergedTypeDefs = printSchema(temp);
+
+  return [makeExecutableSchema({
+    typeDefs: mergedTypeDefs,
+    resolvers: mergedResolvers,
+  }), mergedTypeDefs, mergedResolvers];
 }

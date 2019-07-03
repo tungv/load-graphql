@@ -20,7 +20,7 @@ test.after(() => {
 
 test('should load', async t => {
   logs.length = 0;
-  const schema = load(path.resolve(__dirname, '../fixtures/test_root_1'));
+  const [schema] = load(path.resolve(__dirname, '../fixtures/test_root_1'));
   const resp = await graphql(
     schema,
     `
@@ -35,9 +35,19 @@ test('should load', async t => {
   t.true(logs.length === 0);
 });
 
+test('resolver should be merged and returned', t => {
+  const [, , resolver] = load(path.resolve(__dirname, '../fixtures/test_root_1'));
+  t.snapshot(resolver, 'test_root_1 resolvers should look like this');
+})
+
+test('typeDefs should be merged and returned', t => {
+  const [, typeDefs] = load(path.resolve(__dirname, '../fixtures/test_root_1'));
+  t.snapshot(typeDefs, 'test_root_1 typeDefs should look like this');
+})
+
 test('should have version as package.json version', async t => {
   logs.length = 0;
-  const schema = load(path.resolve(__dirname, '../fixtures/test_root_1'));
+  const [schema] = load(path.resolve(__dirname, '../fixtures/test_root_1'));
   const resp = await graphql(
     schema,
     `
@@ -48,13 +58,13 @@ test('should have version as package.json version', async t => {
     {}
   );
 
-  t.deepEqual(resp, { data: { version: '1.1.2' } });
+  t.deepEqual(resp, { data: { version: '2.0.0' } });
   t.true(logs.length === 0);
 });
 
 test('should log error if resolvers are failed to load', t => {
   logs.length = 0;
-  const schema = load(
+  const [schema] = load(
     path.resolve(__dirname, '../fixtures/test_error_resolver_root')
   );
 
