@@ -52,7 +52,7 @@ scalar JSON
 // src/graphql/some.resolver.js
 export const Query {
   someQuery: () => 'test'
-  
+
   // someOtherQuery can be omitted or implement in a different .resolver.js file
 }
 
@@ -68,14 +68,17 @@ export const JSON = require('graphql-json-type')
 
 ```js
 // src/schema.js file
-import loadGraphql from 'load-graphql';
+import loadGraphql from "load-graphql";
 
 // or
-const loadGraphql = require('load-graphql').default;
+const loadGraphql = require("load-graphql").default;
 
-const pathToGraphqlRootDir = path.join(__dirname, './graphql');
+const pathToGraphqlRootDir = path.join(__dirname, "./graphql");
 
-const executableSchema = loadGraphql(pathToGraphqlRootDir);
+// difference from v1, in v2, loadGrahpQL return a tuple include the schema, and additional typedef and resovlers
+const [executableSchema, reformattedTypeDef, resolversMap] = loadGraphql(
+  pathToGraphqlRootDir,
+);
 
 /* 
   excutableSchema will
