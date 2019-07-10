@@ -1,6 +1,6 @@
 {
   "name": "load-graphql",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "automagically load graphql definitions and resolvers and return an executable schema",
   "main": "build/index.js",
   "files": [

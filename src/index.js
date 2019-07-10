@@ -32,7 +32,11 @@ export default function (rootPath) {
 
   const mergedResolvers = mergeAll([rootResolvers, ...resolvers]);
 
-  const temp = makeExecutableSchema({ typeDefs: [rootTypeDefs, ...typeDefs] });
+  const temp = makeExecutableSchema({
+    typeDefs: [rootTypeDefs, ...typeDefs], resolverValidationOptions: {
+      requireResolversForResolveType: false,
+    },
+  });
 
   const mergedTypeDefs = printSchema(temp);
 
